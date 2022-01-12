@@ -1,0 +1,42 @@
+#
+name: .NET master
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup nuget.exe
+      uses: nuget/setup-nuget@v1
+
+    - name: Restore packages
+      run: nuget restore VisualME7Logger.sln
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build with MSBuild
+      run: msbuild VisualME7Logger.sln -p:Configuration=Release      
+
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+    - name: Test variable
+      run: echo $RELEASE_NAME
+      env:
+        RELEASE_NAME: PID-release-${{ steps.date.outputs.date }}
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: PID-release-${{ steps.date.outputs.date }}
+        path: VisualME7Logger/LDRPIDTool/bin/release
