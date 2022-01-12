@@ -1,5 +1,5 @@
 #
-name: .NET master
+name: Build debug configuration
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build with MSBuild
-      run: msbuild VisualME7Logger.sln -p:Configuration=Release      
+      run: msbuild VisualME7Logger.sln -p:Configuration=Debug      
 
     - name: Get current date
       id: date
@@ -39,4 +39,4 @@ jobs:
       uses: actions/upload-artifact@v2.2.2
       with:
         name: PID-release-${{ steps.date.outputs.date }}
-        path: VisualME7Logger/LDRPIDTool/bin/release
+        path: VisualME7Logger/LDRPIDTool/bin/debug
