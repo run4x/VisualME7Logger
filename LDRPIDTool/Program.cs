@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -182,79 +183,22 @@ namespace LDRPIDTool
 
         public int rpmSep = 2250;
 
-        public int[] KFLDRLDutyCycles = new int[]
-        {
-            0,
-            10,
-            20,
-            30,
+        public int[] KFLDRLDutyCycles = ConfigurationManager.AppSettings["KFLDRLDutyCycles"].Split(',').Select(int.Parse).ToArray();
 
-            40,
-            50,
-            60,
-            70,
+        public int[] KFLDRLRpms = ConfigurationManager.AppSettings["KFLDRLRpms"].Split(',').Select(int.Parse).ToArray();
 
-            80,
-            95
-        };
+        public int[] KFLDIMXPressures = ConfigurationManager.AppSettings["KFLDIMXPressures"].Split(',').Select(int.Parse).ToArray();
 
-        public int[] KFLDRLRpms = new int[]
-        {
-            1000,
-            1500,
-            2000,
-            2500,
-
-            2750,
-            3000,
-            3250,
-            3500,
-
-            3750,
-            4000,
-            4500,
-            5000,
-
-            5500,
-            6000,
-            6500,
-            6800,
-        };
-
-        public int[] KFLDIMXPressures = new int[]
-        {
-            0,
-            400,
-            800,
-            1200,
-
-            1400,
-            1600,
-            1800,
-            2000
-        };
-
-        public int[] KFLDIMXDutyCycles = new int[]
-        {
-            0,
-            18,
-            36,
-            54,
-
-            63,
-            72,
-            81,
-            90
-        };
+        public int[] KFLDIMXDutyCycles = ConfigurationManager.AppSettings["KFLDIMXDutyCycles"].Split(',').Select(int.Parse).ToArray();
 
         public int[] LoggedDutyCycles;
     }
 
     public class RangeFilter
     {
-        public decimal rpmRangeLengthMin = 2500;
-        public decimal seconds = .1m;
-        public decimal mbar = 75m;
+        public decimal rpmRangeLengthMin = decimal.Parse(ConfigurationManager.AppSettings["RangeFilterMinRpmLength"], System.Globalization.CultureInfo.InvariantCulture);
+        public decimal seconds = decimal.Parse(ConfigurationManager.AppSettings["RangeFilterSeconds"], System.Globalization.CultureInfo.InvariantCulture);
+        public decimal mbar = decimal.Parse(ConfigurationManager.AppSettings["RangeFilterMBar"], System.Globalization.CultureInfo.InvariantCulture);
     }
 
 
