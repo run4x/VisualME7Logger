@@ -1,5 +1,5 @@
 #
-name: Build debug configuration
+name: Custom release
 
 on:
   push:
