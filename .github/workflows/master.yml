@@ -25,7 +25,7 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build with MSBuild
-      run: msbuild VisualME7Logger.sln -p:Configuration=Debug      
+      run: msbuild VisualME7Logger.sln -p:Configuration=CustomPID      
 
     - name: Get current date
       id: date
@@ -33,10 +33,10 @@ jobs:
     - name: Test variable
       run: echo $RELEASE_NAME
       env:
-        RELEASE_NAME: PID-release-${{ steps.date.outputs.date }}
+        RELEASE_NAME: PID-custom-${{ steps.date.outputs.date }}
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.2
       with:
-        name: PID-release-${{ steps.date.outputs.date }}
-        path: D:/a/VisualME7Logger/VisualME7Logger/LDRPIDTool/bin/Debug
+        name: PID-custom-${{ steps.date.outputs.date }}
+        path: D:/a/VisualME7Logger/VisualME7Logger/LDRPIDTool/bin/CustomPID
